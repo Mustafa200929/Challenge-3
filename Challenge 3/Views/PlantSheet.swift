@@ -8,28 +8,29 @@ import SwiftUI
 
 struct PlantSheet: View {
     @Binding var selectedDetent: PresentationDetent
-    @State private var plant: Plant = Plant()
+    @StateObject var plantVM = PlantModelView()
+    
     var body: some View {
         VStack{
             HStack{
                 //Small bar
-                plant.plantIcon
+                Image(systemName: plantVM.plants[0].plantIconName)
                     .padding()
                     .glassEffect(.regular.tint(.teal.opacity(0.3)))
                 VStack{
-                    Text(plant.plantName)
+                    Text(plantVM.plants[0].plantName)
                         .font(.system(size: 24, weight: .bold, design: .rounded))
-                    Text(plant.plantType)
+                    Text(plantVM.plants[0].plantType)
                 }
                 .frame(alignment: .topLeading)
                 .padding()
                 Spacer()
-                if plant.plantAge == 1{
-                    Text("\(plant.plantAge) day old")
+                if plantVM.plants[0].plantAge == 1{
+                    Text("\(plantVM.plants[0].plantAge) day old")
                         .fontWeight(.semibold)
                 }
                 else{
-                    Text("\(plant.plantAge) days old")
+                    Text("\(plantVM.plants[0].plantAge) days old")
                         .fontWeight(.semibold)
                 }
                 
@@ -38,11 +39,11 @@ struct PlantSheet: View {
             if selectedDetent == .medium || selectedDetent == .large{
                 VStack{
                     VStack{
-                        Text("Should germinate in \( plant.daysToGerminate) days")
+                        Text("Should germinate in \( plantVM.plants[0].daysToGerminate) days")
                             .padding(.horizontal)
                             .padding(.top)
                             .fontWeight(.medium)
-                        Text(plant.message)
+                        Text(plantVM.plants[0].message)
                             .padding(.bottom)
                     }
                     //.frame(minWidth: 350)
@@ -65,12 +66,15 @@ struct PlantSheet: View {
                     
                 }
             }
-            Spacer()
+            
         }
+        .padding()
         
+        Spacer()
     }
 }
 
 #Preview{
     PlantSheet(selectedDetent: .constant(.medium))
 }
+

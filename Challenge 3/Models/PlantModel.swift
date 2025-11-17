@@ -23,15 +23,4 @@ struct PlantTip: Identifiable {
     var symbol: String
     var text: String
 }
-/*
- struct Plant: Identifiable {
- var id = UUID()
- var plantName: String = "Bob"
- var plantType: String = "Orchid"
- var plantIcon: Image = Image(systemName: "tree")
- var plantAge: Int = 1
- var daysToGerminate: Int = 4
- var message: String = "Look out for sprouts"
- var tips: [Any] = [[Image(systemName: "sun.max"),"Dry Environment"], [Image(systemName: "sun.haze"), "Shield from sunlight"], [Image(systemName: "drop.fill"),"Water Regularly"], [Image(systemName: "wind.fill"),"Windy area"]]
- }
- */
+
