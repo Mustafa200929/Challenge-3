@@ -9,11 +9,11 @@ import SwiftUI
 
 struct HomeView: View {
     @State private var showSheet = false
+    @State private var showSecondSheet = false
     @State private var selectedDetent: PresentationDetent = .fraction(0.1)
     var body: some View {
         NavigationStack {
             ZStack{
-                // Ocean gradient base
                 LinearGradient(
                     gradient: Gradient(colors: [
                         Color(hex: "2F66E9"),
@@ -69,8 +69,10 @@ struct HomeView: View {
                             showSheet = true
                         }
                         .sheet(isPresented: $showSheet){
-                            PlantSheet(selectedDetent: $selectedDetent)
-                                .presentationDetents([.fraction(0.1),.medium,.large], selection: $selectedDetent)
+                            NavigationStack{ 
+                                PlantSheet(selectedDetent: $selectedDetent)
+                                    .presentationDetents([.fraction(0.1),.fraction(0.7),.large], selection: $selectedDetent)
+                            }
                         }
                 }
                 
@@ -92,5 +94,6 @@ struct HomeView: View {
 
 #Preview{
     HomeView()
+        .environmentObject(PlantViewModel())
 }
 
