@@ -9,9 +9,11 @@ import SwiftUI
 
 @main
 struct Challenge_3App: App {
+    @StateObject var plantVM = PlantViewModel()
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(plantVM)
         }
     }
 }

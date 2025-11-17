@@ -7,7 +7,7 @@
 import SwiftUI
 import Combine
 
-class PlantModelView: ObservableObject {
+class PlantViewModel: ObservableObject {
     @Published var plants: [Plant] = [
         Plant(
             plantName: "Bob",

@@ -8,12 +8,11 @@ import SwiftUI
 
 struct PlantSheet: View {
     @Binding var selectedDetent: PresentationDetent
-    @StateObject var plantVM = PlantModelView()
+    @EnvironmentObject var plantVM: PlantViewModel
     
     var body: some View {
         VStack{
             HStack{
-                //Small bar
                 Image(systemName: plantVM.plants[0].plantIconName)
                     .padding()
                     .glassEffect(.regular.tint(.teal.opacity(0.3)))
@@ -76,5 +75,6 @@ struct PlantSheet: View {
 
 #Preview{
     PlantSheet(selectedDetent: .constant(.medium))
+        .environmentObject(PlantViewModel())
 }
 
