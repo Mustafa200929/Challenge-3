@@ -72,9 +72,7 @@ struct PlantSheet: View {
                                 .onTapGesture {
                                     //Next page
                                 }
-                            NavigationLink{ //find a better way later
-                                TipsView()
-                            }label:{
+                           
                                 HStack{
                                     Text("Tips")
                                         .font(.system(size: 24, weight: .bold, design: .rounded))
@@ -87,7 +85,7 @@ struct PlantSheet: View {
                                 .frame(maxWidth:.infinity, alignment: .leading)
                             }
                             VStack{
-                                ForEach(0..<2, id: \.self){i in
+                                ForEach(0..<plantVM.plants[0].tips.count, id: \.self){i in
                                     HStack{
                                         Image(systemName:plantVM.plants[0].tips[i].symbol)
                                             .padding()
@@ -180,7 +178,7 @@ struct PlantSheet: View {
             .padding(.top, -20)
         }
     }
-}
+
 
 #Preview{
     PlantSheet(selectedDetent: .constant(.large))
