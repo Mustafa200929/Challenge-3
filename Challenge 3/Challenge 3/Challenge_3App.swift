@@ -10,10 +10,12 @@ import SwiftUI
 @main
 struct Challenge_3App: App {
     @StateObject var plantVM = PlantViewModel()
+    @StateObject var journalVM = JournalViewModel()
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .environmentObject(plantVM)
+                .environmentObject(journalVM)
         }
     }
 }

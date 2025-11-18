@@ -95,5 +95,6 @@ struct HomeView: View {
 #Preview{
     HomeView()
         .environmentObject(PlantViewModel())
+        .environmentObject(JournalViewModel())
 }
 
