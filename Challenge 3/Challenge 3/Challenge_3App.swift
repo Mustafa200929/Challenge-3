@@ -9,6 +9,7 @@ import SwiftUI
 
 @main
 struct Challenge_3App: App {
+    @AppStorage("hasFinishedStory") var hasFinishedStory = false
     @StateObject var plantVM = PlantViewModel()
     @StateObject var journalVM = JournalViewModel()
     var body: some Scene {
@@ -16,6 +17,11 @@ struct Challenge_3App: App {
             ContentView()
                 .environmentObject(plantVM)
                 .environmentObject(journalVM)
+            if hasFinishedStory {
+                            HomeView()
+                        } else {
+                            StoryFlow()
+                        }
         }
     }
 }

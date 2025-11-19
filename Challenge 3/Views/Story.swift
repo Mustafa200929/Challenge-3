@@ -28,6 +28,7 @@ struct TypewriterText: View {
             }
     }
 }
+
 @ViewBuilder
 func speechBox<Content: View>(@ViewBuilder content: () -> Content) -> some View {
     VStack(alignment: .leading, spacing: 0) {
@@ -47,7 +48,8 @@ func speechBox<Content: View>(@ViewBuilder content: () -> Content) -> some View 
 
 struct StoryFlow: View {
     @State private var navigateHome = false
-    
+    @AppStorage("hasFinishedStory") var hasFinishedStory = false  
+
     var body: some View {
         NavigationStack {
             Story(navigateHome: $navigateHome)
@@ -121,6 +123,7 @@ A... SHARK, it's heading to you! You look around to see what you can do...
 struct STIIIView: View {
     @Binding var navigateHome: Bool
     @State private var fadeToBlack = false
+    @AppStorage("hasFinishedStory") var hasFinishedStory = false
     
     var body: some View {
         ZStack {
@@ -143,17 +146,17 @@ You jump to the side just in time — the shark glides past with a splash... an 
                 .padding(.bottom, 40)
             }
             
-
             Color.black
                 .ignoresSafeArea()
                 .opacity(fadeToBlack ? 1 : 0)
                 .animation(.easeInOut(duration: 2), value: fadeToBlack)
         }
         .onAppear {
-
             DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                 fadeToBlack = true
+                    
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                    hasFinishedStory = true
                     navigateHome = true
                 }
             }
