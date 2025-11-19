@@ -59,9 +59,6 @@ struct addingplantView: View {
                         .padding(.top)
                         .offset(x:0,y:60)
                         .bold()
-                        .onDisappear {
-                                onReturn?()
-                            }
                         
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack(alignment: .top, spacing: 16) {
