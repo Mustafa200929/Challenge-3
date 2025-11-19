@@ -38,6 +38,9 @@ struct addingplantView: View {
     @State private var selectedIcon: String? = nil
     @State private var nickname: String = ""
     @State private var selectedSpecies = "None"
+    @EnvironmentObject var plantVM: PlantViewModel   // ← ADD HERE
+    var onAddComplete: (() -> Void)? = nil
+    @Environment(\.dismiss) private var dismiss
     let species = ["Aloe Vera",
                    "basil",
                    "Cactus",
@@ -129,7 +132,7 @@ struct addingplantView: View {
                             }
                         }
                     }
-                                        Form{
+                    Form{
                         Section{
                             TextField("what is the nickname for your plant", text: $nickname)
                                 .padding()
@@ -146,13 +149,30 @@ struct addingplantView: View {
                         
                     }
                     Button(action: {
-                        // Your add plant action here
+                        guard let icon = selectedIcon else { return }
+                        
+                        let newPlant = Plant(
+                            plantName: nickname,
+                            plantType: selectedSpecies,
+                            plantIconName: icon,
+                            plantAge: 1,
+                            daysToGerminate: 4,
+                            message: "New Plant!",
+                            tips: []
+                        )
+                        
+                        plantVM.addPlant(plant: newPlant) // Your adonAddComplete?()
+                        
+                        onAddComplete?()
+                        
+                        
+                        dismiss()
                     }) {
                         HStack(spacing: 10) {
                             Image(systemName: "leaf.fill")
                                 .font(.system(size: 18, weight: .semibold))
                                 .symbolRenderingMode(.hierarchical)
-
+                            
                             Text("Add Plant")
                                 .font(.system(.headline, design: .rounded))
                                 .tracking(0.5)
@@ -189,7 +209,7 @@ struct addingplantView: View {
                     .buttonStyle(.plain)
                     .accessibilityLabel("Add Plant")
                 }.navigationTitle(Text("Add a Plant!"))
-                    
+                
                 
                 
                 
