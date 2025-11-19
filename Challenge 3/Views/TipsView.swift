@@ -5,9 +5,10 @@
 //  Created by Mustafa Topiwala on 17/11/25.
 //
 import SwiftUI
-
+import FoundationModels
 struct TipsView: View {
     @EnvironmentObject var plantVM: PlantViewModel
+    private var model = SystemLanguageModel.default
     var body: some View {
         ZStack{
             LinearGradient(

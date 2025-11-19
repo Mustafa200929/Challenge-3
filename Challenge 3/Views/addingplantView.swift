@@ -16,7 +16,7 @@ private struct ItemCenterPreferenceKey: PreferenceKey {
 
 private func scaleForItem(containerWidth: CGFloat, itemMidX: CGFloat) -> CGFloat {
     let centerX = containerWidth / 2
-    let maxDistance: CGFloat = 180 
+    let maxDistance: CGFloat = 180
     let distance = min(abs(itemMidX - centerX), maxDistance)
     let normalized = 1 - (distance / maxDistance)
     let minScale: CGFloat = 0.9
@@ -25,10 +25,13 @@ private func scaleForItem(containerWidth: CGFloat, itemMidX: CGFloat) -> CGFloat
 }
 
 let plantIcons: [String] = [
-    "leaf",
-    "leaf.fill",
-    "tree",
-    
+    "plant1",
+    "plant2",
+    "plant3",
+    "plant4",
+    "plant5",
+    "plant6",
+    "plant7",
 ]
 struct addingplantView: View {
     @State private var selectedIcon: String? = nil
@@ -53,7 +56,10 @@ struct addingplantView: View {
                 
                 VStack{
                     
-                    
+                    Text("Select an Icon")
+                        .padding(.top)
+                        .offset(x:0,y:60)
+                        .bold()
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack(alignment: .top, spacing: 16) {
                             Spacer().frame(width: sideInset)
@@ -61,8 +67,10 @@ struct addingplantView: View {
                                 let _ = ()
                                 let isSelected = (selectedIcon == icon)
                                 VStack {
-                                    Image(systemName: icon)
-                                        .font(.system(size: 56, weight: .regular))
+                                    Image(icon)
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 80, height: 80)
                                         .padding(16)
                                         .background(isSelected ? Color.accentColor.opacity(0.2) : Color.clear)
                                         .background(.thinMaterial)
@@ -70,13 +78,8 @@ struct addingplantView: View {
                                         .overlay(
                                             RoundedRectangle(cornerRadius: 12)
                                                 .stroke(isSelected ? Color.accentColor : Color.secondary.opacity(0.2), lineWidth: isSelected ? 3 : 1)
-                                            
                                         )
-                                    Text(icon)
-                                        .font(.caption)
-                                        .foregroundStyle(.secondary)
-                                        .multilineTextAlignment(.center)
-                                        .bold()
+                                    
                                 }
                                 .scaleEffect(isSelected ? 1.08 : 1.0)
                                 .shadow(color: isSelected ? Color.accentColor.opacity(0.25) : Color.clear, radius: isSelected ? 12 : 0, x: 0, y: 6)
@@ -123,13 +126,7 @@ struct addingplantView: View {
                             }
                         }
                     }
-                    Text(selectedIcon.map { "Selected Icon: \($0)" } ?? "Scroll to select")
-                        .font(.footnote)
-                        .foregroundStyle(.secondary)
-                        .frame(maxWidth: .infinity)
-                        .padding(.top, 2)
-                        .bold()
-                    Form{
+                                        Form{
                         Section{
                             TextField("what is the nickname for your plant", text: $nickname)
                                 .padding()

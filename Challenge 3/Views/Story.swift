@@ -164,4 +164,6 @@ You jump to the side just in time — the shark glides past with a splash... an 
 
 #Preview {
     StoryFlow()
+        .environmentObject(PlantViewModel())
+        .environmentObject(JournalViewModel())
 }
