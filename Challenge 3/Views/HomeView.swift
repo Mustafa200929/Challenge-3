@@ -10,7 +10,8 @@ import SwiftUI
 struct HomeView: View {
     @State private var showSheet = false
     @State private var showSecondSheet = false
-    @State private var selectedDetent: PresentationDetent = .fraction(0.1)
+    @State private var selectedDetent: PresentationDetent =
+        .fraction(0.1)
     var body: some View {
         NavigationStack {
             ZStack{
@@ -24,16 +25,30 @@ struct HomeView: View {
                     endPoint: .bottom
                 )
                 .ignoresSafeArea()
+                .navigationBarBackButtonHidden(true)
+                ZStack {
+                    Rectangle()
+                        .fill(Color.clear)
+                        .glassEffect(.regular, in: RoundedRectangle(cornerRadius: 20))
+                        .frame(width:300, height:130)
+                        .offset(x:-35,y:-310)
+                    Text("You check your supplies, you realise you only have one seed inside .To continue, please get a seed from your preferred plant vendor")
+                        .foregroundColor(.black)
+                        .offset(x:-50,y:-310)
+                        .frame(width:250, height:130)
+                }
                 HStack {
+                        
+                    
                     NavigationLink(destination: addingplantView()) {
                         Image(systemName: "plus")
                             .padding()
-                            
                             .accessibilityLabel("Add Plant")
                             .glassEffect(.clear)
                             .padding()
                             
                     }
+                    
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
                 VStack{
