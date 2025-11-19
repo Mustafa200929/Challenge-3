@@ -14,14 +14,15 @@ struct Challenge_3App: App {
     @StateObject var journalVM = JournalViewModel()
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .environmentObject(plantVM)
-                .environmentObject(journalVM)
             if hasFinishedStory {
-                            HomeView()
-                        } else {
-                            StoryFlow()
-                        }
+                HomeView()
+                    .environmentObject(PlantViewModel())
+                    .environmentObject(JournalViewModel())
+            } else {
+                StoryFlow()
+                    .environmentObject(PlantViewModel())
+                    .environmentObject(JournalViewModel())
+            }
         }
     }
 }

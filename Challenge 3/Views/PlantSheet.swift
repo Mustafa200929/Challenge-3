@@ -27,8 +27,8 @@ struct PlantSheet: View {
             ScrollView{
                 VStack{
                     HStack{
-                        Image(systemName: plantVM.plants[0].plantIconName)
-                            .padding()
+                   Image(systemName: plantVM.plants[0].plantIconName)
+                          .padding()
                             .glassEffect(.regular.tint(.teal.opacity(0.3)))
                         VStack{
                             Text(plantVM.plants[0].plantName)
