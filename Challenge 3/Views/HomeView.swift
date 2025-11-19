@@ -12,6 +12,8 @@ struct HomeView: View {
     @State private var showSecondSheet = false
     @State private var selectedDetent: PresentationDetent =
         .fraction(0.1)
+    @State private var boxOpacity: Double = 1
+
     var body: some View {
         NavigationStack {
             ZStack{
@@ -31,23 +33,34 @@ struct HomeView: View {
                         .fill(Color.clear)
                         .glassEffect(.regular, in: RoundedRectangle(cornerRadius: 20))
                         .frame(width:300, height:130)
-                        .offset(x:-35,y:-310)
-                    Text("You check your supplies, you realise you only have one seed inside .To continue, please get a seed from your preferred plant vendor")
+                        .offset(x:-35, y:-310)
+
+                    Text("You check your supplies, you realise you only have one seed inside. To continue, please get a seed from your preferred plant vendor")
                         .foregroundColor(.black)
-                        .offset(x:-50,y:-310)
                         .frame(width:250, height:130)
+                        .offset(x:-50, y:-310)
                 }
+                .opacity(boxOpacity)
+                .animation(.easeOut(duration: 1), value: boxOpacity)
+
+
                 HStack {
                         
                     
-                    NavigationLink(destination: addingplantView()) {
+                    NavigationLink(
+                        destination: addingplantView(onReturn: {
+                            withAnimation(.easeOut(duration: 1.0)) {
+                                boxOpacity = 0
+                            }
+                        })
+                    ) {
                         Image(systemName: "plus")
                             .padding()
                             .accessibilityLabel("Add Plant")
-                            .glassEffect(.clear)
+                            .glassEffect()
                             .padding()
-                            
                     }
+
                     
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)

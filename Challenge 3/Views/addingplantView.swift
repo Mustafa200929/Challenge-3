@@ -34,6 +34,7 @@ let plantIcons: [String] = [
     "plant7",
 ]
 struct addingplantView: View {
+    var onReturn: (() -> Void)? = nil
     @State private var selectedIcon: String? = nil
     @State private var nickname: String = ""
     @State private var selectedSpecies = "None"
@@ -53,13 +54,15 @@ struct addingplantView: View {
             let idealInset = (width - itemWidth) / 2
             let sideInset = idealInset * 0.8
             NavigationStack{
-                
                 VStack{
-                    
                     Text("Select an Icon")
                         .padding(.top)
                         .offset(x:0,y:60)
                         .bold()
+                        .onDisappear {
+                                onReturn?()
+                            }
+                        
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack(alignment: .top, spacing: 16) {
                             Spacer().frame(width: sideInset)
