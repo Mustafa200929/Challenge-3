@@ -31,7 +31,6 @@ struct TipsView: View {
 
             VStack(alignment: .leading, spacing: 0) {
 
-                // Title
                 Text("Tips")
                     .font(.system(size: 36, weight: .bold, design: .rounded))
                     .padding()
@@ -44,21 +43,18 @@ struct TipsView: View {
                 ScrollView {
                     VStack(spacing: 16) {
 
-                        // 🟡 Loading state
                         if loadingTips {
                             ProgressView("Generating AI tips…")
                                 .frame(maxWidth: .infinity)
                                 .padding()
                         }
 
-                        // 🔴 Error state
                         if let errorMessage = errorMessage {
                             Text(errorMessage)
                                 .foregroundColor(.red)
                                 .padding()
                         }
 
-                        // 🟢 AI Tips
                         ForEach(generatedTips, id: \.self) { tip in
                             HStack {
                                 Image(systemName: "leaf.fill")
@@ -83,7 +79,7 @@ struct TipsView: View {
         }
     }
 
-    // MARK: - Load AI Tips
+    // MARK: - Load AI Tips (now includes AGE)
     private func loadTips() async {
         guard let plant = plantVM.plants.first else {
             errorMessage = "No plant found."
@@ -99,13 +95,17 @@ struct TipsView: View {
 
         loadingTips = true
         errorMessage = nil
-
         do {
-            let tips = try await tipGenerator.generateTips(for: info)
+            let tips = try await tipGenerator.generateTips(
+                for: info,
+                plantAge: plant.plantAge,
+                daysToGerminate: plant.daysToGerminate
+            )
             generatedTips = tips
         } catch {
             errorMessage = "Failed to load AI tips."
         }
+
 
         loadingTips = false
     }

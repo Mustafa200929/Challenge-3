@@ -6,17 +6,25 @@ import Combine
 class TipGenerator: ObservableObject {
     let session = LanguageModelSession(model: .default)
 
-    func generateTips(for plant: PlantInfo) async throws -> [String] {
+    func generateTips(for plant: PlantInfo, plantAge: Int, daysToGerminate: Int) async throws -> [String] {
 
         let prompt = """
         You are a plant care assistant.
-        Generate 4 short care tips under 20 words.
+        Generate 4 short plant care tips under 20 words.
 
         Plant Name: \(plant.name)
-        Temperature: \(plant.temp)
-        Watering: \(plant.wateringperiod)
+        Age in days: \(plantAge)
+        Days to Germinate: \(daysToGerminate)
+
+        Temperature requirement: \(plant.temp)
+        Watering frequency: \(plant.wateringperiod)
         Lighting: \(plant.lighting)
         Toxicity: \(plant.toxicinfo)
+
+        IMPORTANT:
+        • If plantAge < daysToGerminate = give seed-level germination advice.
+        • If plantAge == daysToGerminate = give sprouting transition advice.
+        • If plantAge > daysToGerminate = give care tips for young/adult plant.
 
         Return ONLY:
         1. tip
@@ -25,22 +33,14 @@ class TipGenerator: ObservableObject {
         4. tip
         """
 
-        // This returns LanguageModelSession.Response<String>
         let result = try await session.respond(to: prompt)
+        let text = result.content
 
-        // Extract actual text
-        let text: String = result.content
-        print("RAW OUTPUT:\n\(text)")
-
-        // Split into separate lines
-        let rawLines = text.components(separatedBy: CharacterSet.newlines)
-
-        // Trim + remove empty rows
-        let lines = rawLines
+        let lines = text
+            .components(separatedBy: .newlines)
             .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
             .filter { !$0.isEmpty }
 
-        // Remove numbering like "1. " or "2) "
         let cleaned = lines.map { line in
             line.replacingOccurrences(
                 of: #"^\d+[\.\)]\s*"#,
@@ -52,3 +52,4 @@ class TipGenerator: ObservableObject {
         return cleaned
     }
 }
+

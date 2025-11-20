@@ -11,7 +11,7 @@ class PlantViewModel: ObservableObject {
     @Published var plants: [Plant] = [
         Plant(
             plantName: "Bob",
-            plantType: "Cactus",
+            plantType: "Water Spinach",
             plantIconName: "tree",
             plantAge: 1,
             daysToGerminate: 4,
