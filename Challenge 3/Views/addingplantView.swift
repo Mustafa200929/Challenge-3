@@ -78,15 +78,15 @@ struct addingplantView: View {
                         .padding(.top)
                         .offset(y: 60)
                         .bold()
-<<<<<<< Updated upstream
+
                         
-=======
+
                         .onDisappear {
                             onReturn?()
                         }
 
                     // --- ICON CAROUSEL ---
->>>>>>> Stashed changes
+
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack(alignment: .top, spacing: 16) {
                             Spacer().frame(width: sideInset)

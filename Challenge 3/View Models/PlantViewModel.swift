@@ -11,7 +11,7 @@ class PlantViewModel: ObservableObject {
     @Published var plants: [Plant] = [
         Plant(
             plantName: "Bob",
-            plantType: "Orchid",
+            plantType: "Cactus",
             plantIconName: "tree",
             plantAge: 1,
             daysToGerminate: 4,
@@ -28,6 +28,11 @@ class PlantViewModel: ObservableObject {
     func addPlant(plant: Plant){
         plants.append(plant)
     }
-    
+    func info(for plant: Plant) -> PlantInfo? {
+        return PlantDatabase.first {
+            $0.name.lowercased() == plant.plantType.lowercased()
+        }
+    }
+
     
 }

@@ -10,7 +10,10 @@ struct PlantSheet: View {
     @Binding var selectedDetent: PresentationDetent
     @EnvironmentObject var plantVM: PlantViewModel
     @EnvironmentObject var journalVM: JournalViewModel
-    
+    @StateObject private var tipGenerator = TipGenerator()
+    @State private var generatedTips: [String] = []
+    @State private var loadingTips = false
+
     var body: some View {
         ZStack{
             LinearGradient(
